@@ -73,7 +73,7 @@ namespace Clock
             int font_size = (int)Convert.ToDouble(sr.ReadLine());
             
             sr.Close();
-            fontDialog = new ChooseFontForm(font_name, font_size);
+            fontDialog = new ChooseFontForm(this, font_name, font_size);
             labelTime.Font=fontDialog.Font;
 
         }
@@ -232,5 +232,10 @@ namespace Clock
             else rk.DeleteValue(key_name, false);
             rk.Dispose();
         }
+
+		private void cmAlarm_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
