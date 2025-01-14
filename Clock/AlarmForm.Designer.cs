@@ -39,16 +39,17 @@
 			this.lbAlarms.FormattingEnabled = true;
 			this.lbAlarms.ItemHeight = 29;
 			this.lbAlarms.Location = new System.Drawing.Point(24, 24);
-			this.lbAlarms.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.lbAlarms.Margin = new System.Windows.Forms.Padding(5);
 			this.lbAlarms.Name = "lbAlarms";
 			this.lbAlarms.Size = new System.Drawing.Size(946, 613);
 			this.lbAlarms.TabIndex = 0;
+			this.lbAlarms.DoubleClick += new System.EventHandler(this.lbAlarms_DoubleClick);
 			// 
 			// btnOK
 			// 
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnOK.Location = new System.Drawing.Point(988, 24);
-			this.btnOK.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.btnOK.Margin = new System.Windows.Forms.Padding(5);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(168, 58);
 			this.btnOK.TabIndex = 1;
@@ -58,7 +59,7 @@
 			// btnAdd
 			// 
 			this.btnAdd.Location = new System.Drawing.Point(988, 92);
-			this.btnAdd.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.btnAdd.Margin = new System.Windows.Forms.Padding(5);
 			this.btnAdd.Name = "btnAdd";
 			this.btnAdd.Size = new System.Drawing.Size(168, 58);
 			this.btnAdd.TabIndex = 2;
@@ -69,7 +70,7 @@
 			// btnDelete
 			// 
 			this.btnDelete.Location = new System.Drawing.Point(988, 161);
-			this.btnDelete.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.btnDelete.Margin = new System.Windows.Forms.Padding(5);
 			this.btnDelete.Name = "btnDelete";
 			this.btnDelete.Size = new System.Drawing.Size(168, 58);
 			this.btnDelete.TabIndex = 3;
@@ -86,7 +87,7 @@
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.lbAlarms);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.Margin = new System.Windows.Forms.Padding(5);
 			this.Name = "AlarmForm";
 			this.Text = "Alarms";
 			this.ResumeLayout(false);

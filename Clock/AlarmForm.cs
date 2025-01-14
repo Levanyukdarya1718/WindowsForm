@@ -37,5 +37,16 @@ namespace Clock
 			}
 			
 		}
+
+		private void lbAlarms_DoubleClick(object sender, EventArgs e)
+		{
+			addAlarm.Alarm = lbAlarms.SelectedItem as Alarm;
+			if(addAlarm.ShowDialog()==DialogResult.OK)
+			{
+				lbAlarms.SelectedItem = new Alarm(addAlarm.Alarm);
+				lbAlarms.Items[lbAlarms.SelectedIndex] = addAlarm.Alarm;
+				//lbAlarms.Refresh();
+			}
+		}
 	}
 }
