@@ -19,29 +19,47 @@ namespace Clock
     public partial class MainForm : Form
     {
         ChooseFontForm fontDialog = null;
+        AlarmForm alarms = null;
+        Alarm nextAlarm = null;
         public MainForm()
         {
+            Console.WriteLine(DateTime.MinValue);
             InitializeComponent();
             labelTime.BackColor = Color.Black;
             labelTime.ForeColor = Color.DeepPink;
             this.Location = new Point(Screen.PrimaryScreen.Bounds.Width - this.Width, 50);
             SetVisibility(false);
-            cmShowConsole.Checked=true;
+            cmShowConsole.Checked = true;
             //fontDialog = new ChooseFontForm();
             LoadSettings();
+            alarms = new AlarmForm();
         }
-        void SetVisibility (bool vicible)
+        void CompareAlarmDEBUG()
+        {
+            Alarm alarm1 = new Alarm();
+            Alarm alarm2 = new Alarm();
+
+            alarm1.Date = new DateTime(2025, 01, 15);
+            alarm1.Time = new TimeSpan(9, 5, 0);
+
+            alarm2.Date = new DateTime(2025, 01, 16);
+            alarm2.Time = new TimeSpan(9, 11, 00);
+
+            // Console.WriteLine(alarm1 < alarm2);
+
+        }
+        void SetVisibility(bool vicible)
         {
             cbShowDate.Visible = vicible;
             cbShowWeekDay.Visible = vicible;
             btnHideControls.Visible = vicible;
-            this.TransparencyKey = vicible? Color.Empty: this.BackColor;
-            this.FormBorderStyle = vicible? FormBorderStyle.FixedToolWindow: FormBorderStyle.None;
+            this.TransparencyKey = vicible ? Color.Empty : this.BackColor;
+            this.FormBorderStyle = vicible ? FormBorderStyle.FixedToolWindow : FormBorderStyle.None;
             this.ShowInTaskbar = vicible;
         }
         void SaveSettings()
         {
-            
+
             StreamWriter sw = new StreamWriter("Settings.ini");
             sw.WriteLine($"{cmTopmost.Checked}");
             sw.WriteLine($"{cmShowControls.Checked}");
@@ -52,16 +70,16 @@ namespace Clock
             sw.WriteLine($"{labelTime.ForeColor.ToArgb()}");
             sw.WriteLine($"{fontDialog.Filename}");
             sw.WriteLine($"{labelTime.Font.Size}");
-          
+
 
             sw.Close();
-           // Process.Start("notepad", "Settings.ini");
+            // Process.Start("notepad", "Settings.ini");
         }
         void LoadSettings()
         {
             string exicution_path = Path.GetDirectoryName(Application.ExecutablePath);
             Directory.SetCurrentDirectory($"{exicution_path}\\..\\..\\Fonts");
-			StreamReader sr = new StreamReader("Settings.ini");
+            StreamReader sr = new StreamReader("Settings.ini");
             cmTopmost.Checked = bool.Parse(sr.ReadLine());
             cmShowControls.Checked = bool.Parse(sr.ReadLine());
             cmShowDate.Checked = bool.Parse(sr.ReadLine());
@@ -71,12 +89,21 @@ namespace Clock
             labelTime.ForeColor = Color.FromArgb(Convert.ToInt32(sr.ReadLine()));
             string font_name = sr.ReadLine();
             int font_size = (int)Convert.ToDouble(sr.ReadLine());
-            
+
             sr.Close();
             fontDialog = new ChooseFontForm(this, font_name, font_size);
-            labelTime.Font=fontDialog.Font;
+            labelTime.Font = fontDialog.Font;
 
         }
+        Alarm FindNextAlarm()
+		{
+          //  Alarm nextAlarm = null; //new Alarm(alarms.LB_Alarms.Items.Cast<Alarm>().ToArray().Min());
+            Alarm[] actoalAlarms = alarms.LB_Alarms.Items.Cast<Alarm>().Where(a =>a.Time > DateTime.Now.TimeOfDay).ToArray();
+            //Alarm nextAlarms = new Alarm(actoalAlarms.Min());
+            //return nextAlarm; 
+            return actoalAlarms.Min();
+			
+		}
         private void timer_Tick(object sender, EventArgs e)
         {
             labelTime.Text = DateTime.Now.ToString
@@ -95,6 +122,11 @@ namespace Clock
                 labelTime.Text += DateTime.Now.DayOfWeek;
             }
             notifyIcon.Text = labelTime.Text;
+            if(alarms.LB_Alarms.Items.Count>0 )
+			{
+                if (alarms.LB_Alarms.Items.Count > 0) nextAlarm = FindNextAlarm(); //alarms.LB_Alarms.Items.Cast<Alarm>().ToArray().Min();
+              if (nextAlarm != null) Console.WriteLine(nextAlarm);
+			}
         }
 
         private void btnHideControls_Click(object sender, EventArgs e)
@@ -235,7 +267,10 @@ namespace Clock
 
 		private void cmAlarm_Click(object sender, EventArgs e)
 		{
-
+            alarms.StartPosition = FormStartPosition.Manual;
+            alarms.Location = new Point(this.Location.X - alarms.Width, this.Location.Y);
+            alarms.ShowDialog();
+            
 		}
 	}
 }
