@@ -21,7 +21,7 @@ namespace Clock
 			dtpDate.Enabled = false;
 			Alarm = new Alarm();
 			open = new OpenFileDialog();
-			open.Filter = "All Sound files (*.mp3, *.wav, *flac )|*.mp3, *.wal, *.flac| MP-3(*.mp3)|*.mp3|WAV(*.wav)|*.wav|Flac(*.flac)|*.flac";
+			open.Filter = "All Sound files (*.mp3,*.wav,*flac )|*.mp3; *.wal; *.flac| MP-3(*.mp3)|*.mp3|WAV(*.wav)|*.wav|Flac(*.flac)|*.flac";
 
 
 		}
@@ -50,7 +50,7 @@ namespace Clock
 				);
 			Console.WriteLine(week);
 			Alarm.Date = dtpDate.Enabled ? dtpDate.Value : DateTime.MinValue;
-			Alarm.Time = dtpDate.Value.TimeOfDay;
+			Alarm.Time = dtpTime.Value.TimeOfDay;
 			Alarm.WeekDays = week;
 			Alarm.Filename = lblAlarmFile.Text;
 			Alarm.Message = rtbMessage.Text;

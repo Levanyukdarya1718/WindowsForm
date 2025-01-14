@@ -66,7 +66,7 @@ namespace Clock
 			// 
 			// dtpTime
 			// 
-			this.dtpTime.CustomFormat = "hh:mm:ss tt";
+			this.dtpTime.CustomFormat = "HH:mm:ss tt";
 			this.dtpTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.dtpTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
 			this.dtpTime.Location = new System.Drawing.Point(332, 77);
