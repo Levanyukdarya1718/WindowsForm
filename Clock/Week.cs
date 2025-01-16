@@ -15,7 +15,8 @@ namespace Clock
 		byte week;
 		public Week()
 		{
-			week = 0;
+			week = 127;
+			
 		}
 		public Week (bool[]days)
 		{
@@ -43,10 +44,16 @@ namespace Clock
 			for (int i=0; i<7; i++)
 			{
 				weekDays[i] = (byte)(week& (byte)(1<<i))!=0;
-				
-
 			}
 			return weekDays;
+		}
+		public bool Contains(DayOfWeek day)
+		{
+			int i_day = (int)day;
+			i_day -= 1;
+			if (i_day == -1) i_day = 6;
+			return (week & (1 << i_day)) != 0;
+
 		}
 		public override string ToString()
 		{
@@ -55,9 +62,8 @@ namespace Clock
 			{
 				if (((1 << i) & week) != 0)
 				weekdays += $"{Weekdays[i]},";
-
 			}
-			weekdays.Remove(weekdays.Length - 1, 1);
+			//weekdays.Remove(weekdays.Length - 1, 1);
 			return weekdays;
 		}
 	}

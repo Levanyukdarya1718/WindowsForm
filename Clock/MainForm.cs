@@ -33,6 +33,7 @@ namespace Clock
 			//fontDialog = new ChooseFontForm();
 			LoadSettings();
 			alarms = new AlarmForm();
+			axWindowsMediaPlayer.Visible = false;
 		}
 		void CompareAlarmDEBUG()
 		{
@@ -104,6 +105,18 @@ namespace Clock
 			return actualAlarms.Min();
 
 		}
+		bool CompareDates(DateTime date1, DateTime date2)
+		{
+			return date1.Year == date2.Year && date1.Month == date2.Month && date1.Day == date2.Day;
+		}
+		void PlayAlarm()
+		{
+			axWindowsMediaPlayer.URL = nextAlarm.Filename;
+			axWindowsMediaPlayer.settings.volume = 100;
+			axWindowsMediaPlayer.Ctlcontrols.play();
+			axWindowsMediaPlayer.Visible=true;
+		}
+
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			labelTime.Text = DateTime.Now.ToString
@@ -124,21 +137,29 @@ namespace Clock
 			notifyIcon.Text = labelTime.Text;
 			if (
 				nextAlarm != null &&
+				(
+					nextAlarm.Date==DateTime.MinValue?
+					nextAlarm.WeekDays.Contains(DateTime.Now.DayOfWeek):
+					CompareDates(nextAlarm.Date, DateTime.Now)
+				) &&
+				/*||nextAlarm.Date==DateTime.MinValue.Date*/
+				//nextAlarm.WeekDays.Contains(DateTime.Now.DayOfWeek)&&
 				nextAlarm.Time.Hours == DateTime.Now.Hour &&
 				nextAlarm.Time.Minutes == DateTime.Now.Minute &&
 				nextAlarm.Time.Seconds == DateTime.Now.Second
 				)
 			{
 				//nextAlarm = FindNextAlarm();
-				//System.Threading.Thread.Sleep(1000);
-				MessageBox.Show(this, nextAlarm.ToString(), "Alarm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				System.Threading.Thread.Sleep(1000);
+				PlayAlarm();
+				//MessageBox.Show(this, nextAlarm.ToString(), "Alarm", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				nextAlarm = null;
 			}
 
 
 			if ( alarms.LB_Alarms.Items.Count > 0) nextAlarm = FindNextAlarm(); //alarms.LB_Alarms.Items.Cast<Alarm>().ToArray().Min();
 			if (nextAlarm != null) Console.WriteLine(nextAlarm);
-			else Console.WriteLine("No alarms found");
+			//else Console.WriteLine("No alarms found");
 		}
 
 		private void btnHideControls_Click(object sender, EventArgs e)

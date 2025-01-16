@@ -6,27 +6,27 @@ using System.Threading.Tasks;
 
 namespace Clock
 {
-	public class Alarm:IComparable<Alarm>
+	public class Alarm : IComparable<Alarm>
 	{
 		public DateTime Date { get; set; }
 		public TimeSpan Time { get; set; }
 		public Week WeekDays { get; set; }
 		public string Filename { get; set; }
-		public string Message {get; set; }
+		public string Message { get; set; }
 		public Alarm()
 		{
 			WeekDays = new Week();//62
 
 		}
-		public Alarm(DateTime date, TimeSpan time, Week week, string filenae, string massage )
+		public Alarm(DateTime date, TimeSpan time, Week week, string filenae, string massage)
 		{
 			this.Date = date;
-			this.Time =time;
+			this.Time = time;
 			this.WeekDays = week;
 			this.Filename = filenae;
 			this.Message = Message;
 			Console.WriteLine($"Constructor:{this.GetHashCode()}");
-	
+
 		}
 		public Alarm(Alarm other)
 		{
@@ -36,7 +36,7 @@ namespace Clock
 			this.Filename = other.Filename;
 			this.Message = other.Message;
 			Console.WriteLine($"CopyConstructor:{this.GetHashCode()}");
-			
+
 		}
 		public override string ToString()
 		{
@@ -51,6 +51,19 @@ namespace Clock
 
 			return info;
 		}
+		//public static bool operator ==(Alarm left, Alarm right)
+		//{
+		//	return
+		//		left.Date == right.Date &&
+		//		left.Time == right.Time &&
+		//		left.WeekDays == right.WeekDays &&
+		//		left.Filename == right.Filename &&
+		//		left.Message == right.Message;
+		//}
+		//public static bool operator !=(Alarm left, Alarm right)
+		//{ 
+		//	return !(left==right);
+		//}
 		//public static bool operator> (Alarm left, Alarm right)
 		//{
 		//	if (left.Date != DateTime.MinValue || right.Date != DateTime.MinValue)

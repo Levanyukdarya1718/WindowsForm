@@ -19,6 +19,10 @@ namespace Clock
 		{
 			InitializeComponent();
 			dtpDate.Enabled = false;
+			for(int i=0; i<clbWeekDays.Items.Count; i++)
+			{
+				clbWeekDays.SetItemChecked(i, true);
+			}
 			Alarm = new Alarm();
 			open = new OpenFileDialog();
 			open.Filter = "All Sound files (*.mp3,*.wav,*flac )|*.mp3; *.wal; *.flac| MP-3(*.mp3)|*.mp3|WAV(*.wav)|*.wav|Flac(*.flac)|*.flac";
@@ -29,7 +33,7 @@ namespace Clock
 		private void cbUseDate_CheckedChanged(object sender, EventArgs e)
 		{
 			dtpDate.Enabled = cbUseDate.Checked;
-
+			clbWeekDays.Enabled = !cbUseDate.Checked;
 		}
 		void SetWeekDays(bool[]week)
 		{
@@ -77,16 +81,17 @@ namespace Clock
 		}
 		private void AddAlarmForm_Load(object sender, EventArgs e)
 		{
-			if (Alarm.Date != DateTime.MinValue)
-			{
-				cbUseDate.Checked = true;
-				dtpDate.Value = Alarm.Date;
-			}
+				if (Alarm.Date != DateTime.MinValue)
+				{
+					cbUseDate.Checked = true;
+					dtpDate.Value = Alarm.Date;
+				}
 
-			dtpTime.Value = DateTime.Now.Date + Alarm.Time;//new DateTime(1, 1, 2, Alarm.Time.Hours, Alarm.Time.Minutes, Alarm.Time.Seconds);
-			SetWeekDays(Alarm.WeekDays.ExtractWeekDays());
-			lblAlarmFile.Text = Alarm.Filename;
-			rtbMessage.Text = Alarm.Message;
+				dtpTime.Value = DateTime.Now.Date + Alarm.Time;//new DateTime(1, 1, 2, Alarm.Time.Hours, Alarm.Time.Minutes, Alarm.Time.Seconds);
+				SetWeekDays(Alarm.WeekDays.ExtractWeekDays());
+				lblAlarmFile.Text = Alarm.Filename;
+				rtbMessage.Text = Alarm.Message; 
+			
 		}
 	}
 }
